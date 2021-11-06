@@ -166,7 +166,7 @@ def parse_args():
   parser = argparse.ArgumentParser()
   parser.add_argument('--model_name',
                       type=str,
-                      required=True,
+                      required=False,
                       default='deepfm',
                       help='Model Name.')
   parser.add_argument('-t',

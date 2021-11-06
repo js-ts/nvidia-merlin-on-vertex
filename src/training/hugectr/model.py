@@ -15,6 +15,7 @@
 
 from typing import List, Any
 import hugectr
+from mpi4py import MPI
 
 
 def create_model(
@@ -54,14 +55,11 @@ def create_model(
       check_type=hugectr.Check_t.Non,
       num_workers=num_workers)
 
-  # optimizer = hugectr.CreateOptimizer(optimizer_type=hugectr.Optimizer_t.Adam,
-  #                                    update_type=hugectr.Update_t.Global,
-  #                                    beta1=0.9,
-  #                                    beta2=0.999,
-  #                                    epsilon=0.0000001)
-
-  optimizer = hugectr.CreateOptimizer(optimizer_type=hugectr.Optimizer_t.SGD,
-                                      update_type=hugectr.Update_t.Global)
+  optimizer = hugectr.CreateOptimizer(optimizer_type=hugectr.Optimizer_t.Adam,
+                                      update_type=hugectr.Update_t.Global,
+                                      beta1=0.9,
+                                      beta2=0.999,
+                                      epsilon=0.0000001)
 
   model = hugectr.Model(solver, reader, optimizer)
 
@@ -148,7 +146,7 @@ def create_model(
                                bottom_names=["fc2"],
                                top_names=["relu2"]))
 
-  model.add(hugectr.DenseLayer(layer_type=hugectr.Layer_t.Dropou t,
+  model.add(hugectr.DenseLayer(layer_type=hugectr.Layer_t.Dropout,
                                bottom_names=["relu2"],
                                top_names=["dropout2"],
                                dropout_rate=dropout_rate))
